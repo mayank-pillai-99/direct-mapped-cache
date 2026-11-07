@@ -1,0 +1,19 @@
+\begin{tikzpicture}[font=\scriptsize, >=Stealth,
+  st/.style={draw, circle, minimum size=1.35cm, align=center, fill=orange!12}]
+  \node[st] (idle)  at (0,0)    {IDLE};
+  \node[st] (cmp)   at (3.6,0)  {COMPARE};
+  \node[st] (alloc) at (7.2,0)  {ALLOCATE};
+  \node[st] (wmem)  at (3.6,-3) {WRITE\\MEM};
+
+  \draw[->] (idle) to[loop above] node{!req} (idle);
+  \draw[->] (idle) to[bend left=25] node[above]{req / latch request} (cmp);
+  \draw[->] (cmp) to[bend left=25] node[below]{read hit / cpu\_ready} (idle);
+
+  \draw[->] (cmp) to[bend left=25] node[above]{read miss} (alloc);
+  \draw[->] (alloc) to[bend left=25] node[below, align=center]{mem\_ready /\\write block, tag, valid} (cmp);
+  \draw[->] (alloc) to[loop above] node{!mem\_ready} (alloc);
+
+  \draw[->] (cmp) -- node[right, align=left]{write\\(on hit: update word)} (wmem);
+  \draw[->] (wmem) to[bend left=20] node[below left, align=center]{mem\_ready /\\cpu\_ready} (idle);
+  \draw[->] (wmem) to[loop below] node{!mem\_ready} (wmem);
+\end{tikzpicture}

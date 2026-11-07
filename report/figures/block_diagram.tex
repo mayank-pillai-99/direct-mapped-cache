@@ -1,0 +1,35 @@
+\begin{tikzpicture}[font=\scriptsize, >=Stealth,
+  blk/.style={draw, rounded corners=2pt, align=center, minimum height=0.8cm, fill=#1},
+  blk/.default=white]
+  % columns: CPU | decoder | RAMs | comparator | memory
+  \node[blk=gray!15, minimum width=1.2cm, minimum height=4.4cm] (cpu) at (0,0) {CPU\\(test-\\bench)};
+  \node[blk=yellow!15, minimum width=1.6cm] (dec) at (2.3,1.0) {Request regs\\+ Address\\Decoder};
+  \node[blk=blue!10, minimum width=1.6cm] (valid) at (4.9,1.9) {Valid RAM\\64$\times$1};
+  \node[blk=blue!10, minimum width=1.6cm] (tag)   at (4.9,0.8) {Tag RAM\\64$\times$22};
+  \node[blk=blue!10, minimum width=1.6cm] (data)  at (4.9,-0.5) {Data RAM\\64$\times$128};
+  \node[blk=green!12, minimum width=1.3cm] (cmp)  at (7.0,1.35) {Tag\\Comparator};
+  \node[blk=orange!15, minimum width=2.6cm] (fsm) at (4.9,-1.8) {Cache Controller FSM};
+  \node[blk=gray!15, minimum width=1.2cm, minimum height=4.4cm] (mem) at (9.0,0) {Main\\Memory\\64 KB\\(latency\\$L$)};
+
+  % address path
+  \draw[->] (cpu.east |- dec.west) -- node[above]{addr} (dec.west);
+  \coordinate (bus) at (3.6,0);
+  \draw (dec.east) -- (dec.east -| bus);
+  \draw (bus |- valid.west) -- (bus |- data.west);
+  \draw[->] (bus |- valid.west) -- (valid.west);
+  \draw[->] (bus |- tag.west) -- (tag.west);
+  \draw[->] (bus |- data.west) -- (data.west);
+  \node[above left] at (bus |- valid.west) {index};
+  \draw[->] (dec.north) -- ++(0,1.1) -| node[pos=0.25,above]{tag (22 bits)} (cmp.north);
+  % comparator inputs / output
+  \draw[->] (valid.east) -- ++(0.3,0) |- ([yshift=3pt]cmp.west);
+  \draw[->] (tag.east) -- ++(0.3,0) |- ([yshift=-3pt]cmp.west);
+  \draw[->] (cmp.south) |- node[pos=0.85,above]{hit} ([yshift=5pt]fsm.east);
+  % data out
+  \draw[->] ([xshift=4mm]data.south west) |- node[pos=0.75,above]{rdata} (cpu.east |- 0,-1.1);
+  % control
+  \draw[->] (cpu.east |- fsm.west) -- node[above]{req, we, ready} (fsm.west);
+  \draw[<->] ([yshift=-5pt]fsm.east) -- node[below, pos=0.6]{mem\_req / mem\_ready} ([yshift=-5pt]fsm.east -| mem.west);
+  \draw[->] (mem.west |- data.east) -- node[above, pos=0.22, align=center]{block\\128 b} (data.east);
+  \draw[->] (fsm.north) -- node[right]{\tiny refill\_we, word\_we} (data.south);
+\end{tikzpicture}
