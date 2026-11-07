@@ -1,0 +1,7 @@
+*.vvp
+*.vcd
+.DS_Store
+__pycache__/
+report/*.aux
+report/*.log
+report/figures/standalone.pdf
