@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+\begin{axis}[width=\columnwidth, height=5cm, xlabel={Main-memory latency (cycles)},
+  ylabel={AMAT (cycles)}, xmode=log, ymode=log, log basis x=10,
+  xtick={5,10,20,50,100}, xticklabels={5,10,20,50,100},
+  legend pos=north west, legend style={font=\scriptsize}, grid=major,
+  tick label style={font=\scriptsize}]
+\addplot+[mark=*] coordinates {(5,3.750) (10,5.000) (20,7.500) (50,15.000) (100,27.500)};
+\addlegendentry{sequential}
+\addplot+[mark=square*] coordinates {(5,2.175) (10,2.300) (20,2.550) (50,3.300) (100,4.550)};
+\addlegendentry{repeated}
+\addplot+[mark=triangle*] coordinates {(5,8.923) (10,13.868) (20,23.758) (50,53.428) (100,102.878)};
+\addlegendentry{random}
+\addplot+[mark=diamond*] coordinates {(5,9.000) (10,14.000) (20,24.000) (50,54.000) (100,104.000)};
+\addlegendentry{conflict}
+\end{axis}
+\end{tikzpicture}

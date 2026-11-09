@@ -1,0 +1,8 @@
+\begin{tikzpicture}
+\begin{axis}[ybar, width=\columnwidth, height=4.6cm, ymin=0, ymax=110,
+  ylabel={Read hit ratio (\%)}, symbolic x coords={sequential,repeated,random,conflict,mixed}, xtick=data,
+  x tick label style={font=\scriptsize}, nodes near coords, bar width=14pt,
+  every node near coord/.append style={font=\scriptsize}, enlarge x limits=0.15]
+\addplot[fill=blue!35] coordinates {(sequential,75.00) (repeated,97.50) (random,1.10) (conflict,0.00) (mixed,29.58)};
+\end{axis}
+\end{tikzpicture}

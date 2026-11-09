@@ -1,0 +1,13 @@
+% Builds each figure as its own page so it can be exported as a PNG
+% (for slides / the video).  tectonic report/figures/standalone.tex
+\documentclass[tikz,border=6pt]{standalone}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\begin{document}
+\input{block_diagram}
+\input{fsm}
+\input{waveform}
+\input{hit_ratio_plot}
+\input{amat_plot}
+\end{document}
