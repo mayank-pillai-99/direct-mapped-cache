@@ -1,0 +1,8 @@
+# Yosys synthesis script for the direct-mapped cache (main memory is a
+# simulation model and is NOT synthesised).
+# Run from the project root:  yosys -s synth/synth.ys
+read_verilog -I rtl rtl/address_decoder.v rtl/tag_comparator.v rtl/valid_ram.v rtl/tag_ram.v rtl/data_ram.v rtl/cache_controller.v rtl/cache_top.v
+hierarchy -check -top cache_top
+# Target a Xilinx 7-series FPGA (e.g. Artix-7 on Basys-3 / Nexys boards)
+synth_xilinx -top cache_top -flatten
+tee -o synth/synth_report_xilinx.txt stat
