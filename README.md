@@ -4,7 +4,7 @@ A **1 KB direct-mapped cache** with **16-byte blocks** and **32-bit addresses**,
 We simulate it with memory-access traces and measure **hit ratio, miss ratio and AMAT**
 (Average Memory Access Time), and we synthesise it for an FPGA.
 
-**Demo video:** [`View Demo Video`](https://drive.google.com/file/d/1b4b7Es5GQEpHJ-nQuztbH-O1-xMPSe3N/view?usp=sharing) 
+**Demo video:** [`View Demo Video`](https://drive.google.com/file/d/1hKajIvwAtA3hRUVC34389DkUDDriBbx4/view?usp=sharing) 
 **Report:** [`View Report`](report/main.pdf)
 
 ## Team
